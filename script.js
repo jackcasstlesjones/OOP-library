@@ -1,14 +1,14 @@
 class Library {
   constructor() {
-    this.library = [];
+    this.books = [];
   }
 
   addBook(book) {
-    this.library.push(book);
+    this.books.push(book);
   }
 
   removeBook(index) {
-    this.library.splice(index, 1);
+    this.books.splice(index, 1);
   }
 }
 
@@ -30,28 +30,37 @@ class Book {
 }
 
 const bookOne = new Book("Small Gods", "Terry Pratchett", "124", true);
+const bookTwo = new Book("Big Gods", "Pratchett", "144", false);
 const library = new Library();
 
-console.log(bookOne);
 bookOne.changeHaveRead();
-library;
-console.log(bookOne);
+
 library.addBook(bookOne);
+library.addBook(bookTwo);
 
 class UIHelper {
   constructor() {
     this.contentDiv = document.getElementById("content-div");
   }
 
-  render() {
-    // console.log(library.library);
-    library.library.forEach((element, index) => {
-      const bookCard = document.createElement("div");
-      bookCard.textContent = element;
+  renderBookCards() {
+    library.books.forEach((book) => {
+      const bookCard = this.createBookCardElement(book);
       this.contentDiv.appendChild(bookCard);
     });
+  }
+
+  createBookCardElement(book) {
+    const bookCardElement = document.createElement("div");
+    bookCardElement.classList.add("book-card");
+    for (let keys in book) {
+      const infoField = document.createElement("p");
+      infoField.textContent = book[keys];
+      bookCardElement.appendChild(infoField);
+    }
+    return bookCardElement;
   }
 }
 
 const uiHelper = new UIHelper();
-uiHelper.render();
+uiHelper.renderBookCards();
