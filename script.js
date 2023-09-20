@@ -29,6 +29,29 @@ class Book {
   }
 }
 
+const bookOne = new Book("Small Gods", "Terry Pratchett", "124", true);
+const library = new Library();
+
+console.log(bookOne);
+bookOne.changeHaveRead();
+library;
+console.log(bookOne);
+library.addBook(bookOne);
+
 class UIHelper {
-  constructor() {}
+  constructor() {
+    this.contentDiv = document.getElementById("content-div");
+  }
+
+  render() {
+    // console.log(library.library);
+    library.library.forEach((element, index) => {
+      const bookCard = document.createElement("div");
+      bookCard.textContent = element;
+      this.contentDiv.appendChild(bookCard);
+    });
+  }
 }
+
+const uiHelper = new UIHelper();
+uiHelper.render();
