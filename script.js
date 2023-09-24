@@ -47,6 +47,8 @@ class UIHelper {
     library.books.forEach((book) => {
       const bookCard = this.createBookCardElement(book);
       this.contentDiv.appendChild(bookCard);
+      console.log();
+      bookCard.dataset.index = library.books.indexOf(book);
     });
   }
 
