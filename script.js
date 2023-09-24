@@ -28,10 +28,10 @@ class Book {
     }
   }
 }
+const library = new Library();
 
 const bookOne = new Book("Small Gods", "Terry Pratchett", "124", true);
 const bookTwo = new Book("Big Gods", "Pratchett", "144", false);
-const library = new Library();
 
 bookOne.changeHaveRead();
 
@@ -44,25 +44,52 @@ class UIHelper {
   }
 
   renderBookCards() {
+    this.contentDiv.innerHTML = "";
+
     library.books.forEach((book) => {
       const bookCard = this.createBookCardElement(book);
       this.contentDiv.appendChild(bookCard);
-      console.log();
-      bookCard.dataset.index = library.books.indexOf(book);
     });
   }
 
   createBookCardElement(book) {
     const bookCardElement = document.createElement("div");
+
+    const datasetIndex = this.addDatasetIndex(
+      bookCardElement,
+      library.books,
+      book
+    );
+
+    this.removeButton(bookCardElement, datasetIndex);
+
     bookCardElement.classList.add("book-card");
+
     for (let keys in book) {
       const infoField = document.createElement("p");
       infoField.textContent = book[keys];
       bookCardElement.appendChild(infoField);
     }
+
     return bookCardElement;
+  }
+
+  addDatasetIndex(element, array, arrayItem) {
+    element.dataset.index = array.indexOf(arrayItem);
+    return element.dataset.index;
+  }
+
+  removeButton(parentElement, index) {
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "REMOVE";
+    removeBtn.addEventListener("click", () => {
+      library.removeBook(index);
+      this.renderBookCards();
+    });
+    parentElement.appendChild(removeBtn);
   }
 }
 
 const uiHelper = new UIHelper();
+
 uiHelper.renderBookCards();
