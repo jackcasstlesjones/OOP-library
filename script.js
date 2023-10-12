@@ -28,6 +28,7 @@ class Book {
     }
   }
 }
+
 const library = new Library();
 
 const bookOne = new Book("Small Gods", "Terry Pratchett", "124", true);
@@ -54,6 +55,7 @@ class UIHelper {
 
   createBookCardElement(book) {
     const bookCardElement = document.createElement("div");
+    bookCardElement.classList.add("book-card");
 
     const datasetIndex = this.addDatasetIndex(
       bookCardElement,
@@ -62,8 +64,6 @@ class UIHelper {
     );
 
     this.removeButton(bookCardElement, datasetIndex);
-
-    bookCardElement.classList.add("book-card");
 
     for (let keys in book) {
       const infoField = document.createElement("p");
